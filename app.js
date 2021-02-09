@@ -1,8 +1,10 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 
 const app = express();
 app.use(express.json()); // middleware for sending request
+app.use(morgan('dev'));
 
 const articles = JSON.parse(
     fs.readFileSync(`${__dirname}/data/articles.json`)
@@ -70,19 +72,45 @@ const deleteArticle = (req, res) => {
     })
 }
 
+const createAdmin = (req,res) => {
+    res.status(500).json({
+        status: 'err',
+        message: 'This route is not yet defined'
+    })
+}
+
+const getAdmin = (req,res) => {
+    res.status(500).json({
+        status: 'err',
+        message: 'This route is not yet defined'
+    })
+}
+
+///// ROUTER /////
+const articleRouter = express.Router();
+const adminRouter = express.Router();
+
 // Get and post article
-app
-    .route('/articles')
+articleRouter
+    .route('/')
     .get(getAllArticles)
     .post(createArticle);
 
 // Get one, patch and delete article
-app
-    .route('/articles/:title')
+articleRouter
+    .route('/:title')
     .get(getOneArticle)
     .patch(updateArticle)
     .delete(deleteArticle);
 
+// admin
+adminRouter
+    .route('/')
+    .get(getAdmin)
+    .post(createAdmin)
+
+app.use('/articles', articleRouter);
+app.use('/admin', adminRouter);
 
 // Listen to server
 const port = 3001;
