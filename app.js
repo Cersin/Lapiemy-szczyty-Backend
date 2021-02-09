@@ -8,8 +8,7 @@ const articles = JSON.parse(
     fs.readFileSync(`${__dirname}/data/articles.json`)
 );
 
-// Get all articles
-app.get('/articles', (req, res) => {
+const getAllArticles = (req, res) => {
     res.status(200).json({
         status: 'success',
         results: articles.length,
@@ -17,10 +16,9 @@ app.get('/articles', (req, res) => {
             articles
         }
     })
-});
+}
 
-// Get one article
-app.get('/articles/:title', (req, res) => {
+const getOneArticle = (req, res) => {
     console.log(req.params);
 
     const article = articles.find(article => article.title === req.params.title);
@@ -37,10 +35,9 @@ app.get('/articles/:title', (req, res) => {
             article
         }
     });
-})
+}
 
-// Post article
-app.post('/articles', (req, res) => {
+const createArticle = (req, res) => {
     const newId = JSON.stringify((articles.length -1) + 1);
     console.log(articles.length);
     const newArticle = Object.assign({ id: newId }, req.body);
@@ -55,28 +52,39 @@ app.post('/articles', (req, res) => {
             }
         });
     });
-})
+}
 
-// Patch Article
-app.patch('/articles/:title', (req, res) => {
-
+const updateArticle = (req, res) => {
     res.status(200).json({
         status: 'success',
         data: {
             tour: '<Updated tour here>'
         }
     })
-})
+}
 
-// Delete Article
-app.delete('/articles/:title', (req, res) => {
-
+const deleteArticle = (req, res) => {
     res.status(204).json({
         status: 'success',
         data: null
     })
-})
+}
 
+// Get and post article
+app
+    .route('/articles')
+    .get(getAllArticles)
+    .post(createArticle);
+
+// Get one, patch and delete article
+app
+    .route('/articles/:title')
+    .get(getOneArticle)
+    .patch(updateArticle)
+    .delete(deleteArticle);
+
+
+// Listen to server
 const port = 3001;
 app.listen(port, () => {
     console.log(`App running on port ${port}`);
