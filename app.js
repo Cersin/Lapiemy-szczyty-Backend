@@ -57,6 +57,26 @@ app.post('/articles', (req, res) => {
     });
 })
 
+// Patch Article
+app.patch('/articles/:title', (req, res) => {
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            tour: '<Updated tour here>'
+        }
+    })
+})
+
+// Delete Article
+app.delete('/articles/:title', (req, res) => {
+
+    res.status(204).json({
+        status: 'success',
+        data: null
+    })
+})
+
 const port = 3001;
 app.listen(port, () => {
     console.log(`App running on port ${port}`);
