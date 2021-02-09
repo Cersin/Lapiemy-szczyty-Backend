@@ -8,6 +8,7 @@ const articles = JSON.parse(
     fs.readFileSync(`${__dirname}/data/articles.json`)
 );
 
+// Get all articles
 app.get('/articles', (req, res) => {
     res.status(200).json({
         status: 'success',
@@ -18,6 +19,27 @@ app.get('/articles', (req, res) => {
     })
 });
 
+// Get one article
+app.get('/articles/:title', (req, res) => {
+    console.log(req.params);
+
+    const article = articles.find(article => article.title === req.params.title);
+
+    if (!article) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Invalid title'
+        });
+    }
+    res.status(200).json({
+        status: 'success',
+        data: {
+            article
+        }
+    });
+})
+
+// Post article
 app.post('/articles', (req, res) => {
     const newId = JSON.stringify((articles.length -1) + 1);
     console.log(articles.length);
