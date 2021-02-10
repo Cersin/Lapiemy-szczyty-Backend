@@ -1,8 +1,19 @@
 const fs = require('fs');
 
 const articles = JSON.parse(
-    fs.readFileSync(`${__dirname}/data/articles.json`)
+    fs.readFileSync(`${__dirname}/../data/articles.json`)
 );
+
+exports.checkID = (req, res, next, val) => {
+    console.log(`Tour id is: ${val}`);
+    if (!articles.find(article => article.title === req.params.title)) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Invalid ID'
+        });
+    }
+    next();
+};
 
 exports.getAllArticles = (req, res) => {
     res.status(200).json({
@@ -15,16 +26,7 @@ exports.getAllArticles = (req, res) => {
 }
 
 exports.getOneArticle = (req, res) => {
-    console.log(req.params);
-
     const article = articles.find(article => article.title === req.params.title);
-
-    if (!article) {
-        return res.status(404).json({
-            status: 'fail',
-            message: 'Invalid title'
-        });
-    }
     res.status(200).json({
         status: 'success',
         data: {
@@ -35,7 +37,6 @@ exports.getOneArticle = (req, res) => {
 
 exports.createArticle = (req, res) => {
     const newId = JSON.stringify((articles.length -1) + 1);
-    console.log(articles.length);
     const newArticle = Object.assign({ id: newId }, req.body);
 
     articles.push(newArticle);

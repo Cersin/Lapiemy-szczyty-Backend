@@ -7,3 +7,5 @@ router
     .route('/')
     .get(adminController.getAdmin)
     .post(adminController.createAdmin)
+
+module.exports = router;

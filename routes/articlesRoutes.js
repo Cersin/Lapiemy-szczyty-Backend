@@ -2,6 +2,7 @@ const express = require('express');
 const articlesController = require('../controllers/articlesController');
 const router = express.Router();
 
+router.param('title', articlesController.checkID);
 
 // Get and post article
 router
@@ -16,3 +17,4 @@ router
     .patch(articlesController.updateArticle)
     .delete(articlesController.deleteArticle);
 
+module.exports = router;
