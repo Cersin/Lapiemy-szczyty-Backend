@@ -20,7 +20,8 @@
   "author": "Szymon Wójcik",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Cersin/Lapiemy-szczyty-Backend/issues"
+    "url": "https://github.com/Cersin/Lapiemy-szczyty-Backend/issues",
+    "start": "nodemon server.js"
   },
   "homepage": "https://github.com/Cersin/Lapiemy-szczyty-Backend#readme",
   "dependencies": {
