@@ -5,8 +5,12 @@ const articleRouter = require('./routes/articlesRoutes');
 const adminRouter = require('./routes/adminRoutes');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development nodemon server') {
+    app.use(morgan('dev'));
+}
+
 app.use(express.json()); // middleware for sending request
-app.use(morgan('dev')); // middleware for status
 
 // use routes
 app.use('/articles', articleRouter);
