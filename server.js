@@ -17,51 +17,6 @@ mongoose.connect(DB, {
     console.log(err);
 });
 
-const articleSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    mainPhoto: {
-        type: String,
-        required: true
-    },
-    content: {
-        type: String,
-        required: true
-    },
-    tripDate: {
-        type: Date,
-        required: true
-    },
-    distance: {
-        type: Number
-    }
-}, {
-    timestamps: { createdAt: 'createdAt'}
-});
-
-const Article = mongoose.model('Article', articleSchema);
-
-const testArticle = new Article({
-    title: 'Wycieczka przez ścieżkę',
-    category: 'Mała Fatra',
-    mainPhoto: 'widok.jpg',
-    content: 'Fajne widoczki',
-    tripDate: new Date(),
-    distance: 17
-});
-testArticle.save().then((doc) => {
-    console.log(doc);
-}).catch((err) => {
-    console.log('Wystąpił błąd: ' + err);
-})
-
 // console.log(process.env.NODE_ENV);
 // Listen to server
 const port = process.env.PORT || 3000;
