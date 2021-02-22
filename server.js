@@ -48,6 +48,20 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model('Article', articleSchema);
 
+const testArticle = new Article({
+    title: 'Wycieczka przez ścieżkę',
+    category: 'Mała Fatra',
+    mainPhoto: 'widok.jpg',
+    content: 'Fajne widoczki',
+    tripDate: new Date(),
+    distance: 17
+});
+testArticle.save().then((doc) => {
+    console.log(doc);
+}).catch((err) => {
+    console.log('Wystąpił błąd: ' + err);
+})
+
 // console.log(process.env.NODE_ENV);
 // Listen to server
 const port = process.env.PORT || 3000;
