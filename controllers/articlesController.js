@@ -1,22 +1,39 @@
 const Article = require('./../models/articleModel');
 
-exports.getAllArticles = (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        // results: articles.length,
-        // data: {
-        //     articles
-        // }
-    })
+exports.getAllArticles = async (req, res) => {
+    try {
+        const articles = await Article.find();
+        res.status(200).json({
+            status: 'success',
+            results: articles.length,
+            data: {
+                articles
+            }
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'failed',
+            message: err
+        });
+    }
+
 }
 
-exports.getOneArticle = (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: {
-            // article
-        }
-    });
+exports.getOneArticle = async (req, res) => {
+    try {
+        const article = await Article.findOne({ title: req.params.title});
+        res.status(200).json({
+            status: 'success',
+            data: {
+                article
+            }
+        })
+    } catch (err) {
+        res.status(404).json({
+            status: 'failed',
+            message: err
+        });
+    }
 }
 
 exports.createArticle = async (req, res) => {
