@@ -15,7 +15,39 @@ mongoose.connect(DB, {
     console.log('Połączono z bazą danych');
 }).catch((err) => {
     console.log(err);
-})
+});
+
+const articleSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    mainPhoto: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    tripDate: {
+        type: Date,
+        required: true
+    },
+    distance: {
+        type: Number
+    }
+}, {
+    timestamps: { createdAt: 'createdAt'}
+});
+
+const Article = mongoose.model('Article', articleSchema);
+
 // console.log(process.env.NODE_ENV);
 // Listen to server
 const port = process.env.PORT || 3000;
