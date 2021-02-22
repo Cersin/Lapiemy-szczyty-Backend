@@ -49,24 +49,43 @@ exports.createArticle = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             status: 'failed',
-            message: 'Invalid data send!'
+            message: err
         })
     }
 
 }
 
-exports.updateArticle = (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        data: {
-            tour: '<Updated tour here>'
-        }
-    })
+exports.updateArticle = async (req, res) => {
+    try {
+        const article = await Article.findOneAndUpdate({ title: req.params.title }, req.body, {
+            new: true,
+            runValidators: true
+        });
+        res.status(200).json({
+            status: 'success',
+            data: {
+                article
+            }
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: err
+        })
+    }
 }
 
-exports.deleteArticle = (req, res) => {
-    res.status(204).json({
-        status: 'success',
-        data: null
-    })
+exports.deleteArticle = async (req, res) => {
+    try {
+        await Article.findOneAndRemove({ title: req.params.title });
+        res.status(204).json({
+            status: 'success',
+            data: null
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: err
+        })
+    }
 }
