@@ -1,3 +1,5 @@
+const Article = require('./../models/articleModel');
+
 exports.getAllArticles = (req, res) => {
     res.status(200).json({
         status: 'success',
@@ -17,13 +19,23 @@ exports.getOneArticle = (req, res) => {
     });
 }
 
-exports.createArticle = (req, res) => {
+exports.createArticle = async (req, res) => {
+    try {
+        const newArticle = await Article.create(req.body);
+
         res.status(201).json({
             status: 'success',
             data: {
-                // article: newArticle
+                article: newArticle
             }
         });
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Invalid data send!'
+        })
+    }
+
 }
 
 exports.updateArticle = (req, res) => {
