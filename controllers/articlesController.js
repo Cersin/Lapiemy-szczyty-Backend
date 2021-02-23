@@ -5,10 +5,14 @@ exports.getAllArticles = async (req, res) => {
         let query = Article.find();
 
         // Pagination
-        query = query.skip(+req.query.skip).limit(+req.query.limit);
         if (req.query.skip) {
+            query = query.skip(+req.query.skip).limit(+req.query.limit);
             const numDoc = await Article.countDocuments();
             if (+req.query.skip >= numDoc) throw new Error('This page does not exist');
+        }
+
+        if (req.query.category) {
+            query = query.where('category').equals(req.query.category);
         }
 
         const articles = await query;
