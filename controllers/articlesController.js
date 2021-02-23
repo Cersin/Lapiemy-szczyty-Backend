@@ -2,7 +2,16 @@ const Article = require('./../models/articleModel');
 
 exports.getAllArticles = async (req, res) => {
     try {
-        const articles = await Article.find();
+        let query = Article.find().skip(+req.query.skip).limit(4);
+
+        // Pagination
+        query = query.skip(+req.query.skip).limit(4);
+        if (req.query.skip) {
+            const numDoc = await Article.countDocuments();
+            if (+req.query.skip >= numDoc) throw new Error('This page does not exist');
+        }
+
+        const articles = await query;
         res.status(200).json({
             status: 'success',
             results: articles.length,
@@ -16,7 +25,6 @@ exports.getAllArticles = async (req, res) => {
             message: err
         });
     }
-
 }
 
 exports.getOneArticle = async (req, res) => {
