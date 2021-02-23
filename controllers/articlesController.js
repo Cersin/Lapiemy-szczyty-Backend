@@ -1,21 +1,13 @@
 const Article = require('./../models/articleModel');
+const APIFeatures = require('./../utils/apiFeatures');
 
 exports.getAllArticles = async (req, res) => {
     try {
-        let query = Article.find();
+        const features = new APIFeatures(Article.find(), req.query)
+            .pagination()
+            .category();
+        const articles = await features.articles;
 
-        // Pagination
-        if (req.query.skip) {
-            query = query.skip(+req.query.skip).limit(+req.query.limit);
-            const numDoc = await Article.countDocuments();
-            if (+req.query.skip >= numDoc) throw new Error('This page does not exist');
-        }
-
-        if (req.query.category) {
-            query = query.where('category').equals(req.query.category);
-        }
-
-        const articles = await query;
         res.status(200).json({
             status: 'success',
             results: articles.length,
