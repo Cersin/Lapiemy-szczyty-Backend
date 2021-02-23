@@ -2,10 +2,10 @@ const Article = require('./../models/articleModel');
 
 exports.getAllArticles = async (req, res) => {
     try {
-        let query = Article.find().skip(+req.query.skip).limit(4);
+        let query = Article.find();
 
         // Pagination
-        query = query.skip(+req.query.skip).limit(4);
+        query = query.skip(+req.query.skip).limit(+req.query.limit);
         if (req.query.skip) {
             const numDoc = await Article.countDocuments();
             if (+req.query.skip >= numDoc) throw new Error('This page does not exist');
@@ -29,7 +29,7 @@ exports.getAllArticles = async (req, res) => {
 
 exports.getOneArticle = async (req, res) => {
     try {
-        const article = await Article.findOne({ title: req.params.title});
+        const article = await Article.findOne({title: req.params.title});
         res.status(200).json({
             status: 'success',
             data: {
@@ -65,7 +65,7 @@ exports.createArticle = async (req, res) => {
 
 exports.updateArticle = async (req, res) => {
     try {
-        const article = await Article.findOneAndUpdate({ title: req.params.title }, req.body, {
+        const article = await Article.findOneAndUpdate({title: req.params.title}, req.body, {
             new: true,
             runValidators: true
         });
@@ -85,7 +85,7 @@ exports.updateArticle = async (req, res) => {
 
 exports.deleteArticle = async (req, res) => {
     try {
-        await Article.findOneAndRemove({ title: req.params.title });
+        await Article.findOneAndRemove({title: req.params.title});
         res.status(204).json({
             status: 'success',
             data: null
