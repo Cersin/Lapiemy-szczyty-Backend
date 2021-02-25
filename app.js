@@ -16,4 +16,11 @@ app.use(express.json()); // middleware for sending request
 app.use('/articles', articleRouter);
 app.use('/admin', adminRouter);
 
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Nie można znaleźć ${req.originalUrl}`
+    });
+});
+
 module.exports = app;
