@@ -13,13 +13,19 @@ mongoose.connect(DB, {
     useUnifiedTopology: true
 }).then(() => {
     console.log('Połączono z bazą danych');
-}).catch((err) => {
-    console.log(err);
 });
 
 // console.log(process.env.NODE_ENV);
 // Listen to server
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`App running on port ${port}`);
+});
+
+process.on('unhandledRejection', (err) => {
+    console.log(err.name, err.message);
+    console.log('Błąd servera! Zamykam serwer.');
+    server.close(() => {
+        process.exit(1);
+    });
 });
