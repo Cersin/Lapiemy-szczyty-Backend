@@ -93,3 +93,36 @@ exports.deleteArticle = async (req, res) => {
         })
     }
 }
+
+exports.getArticlesStats = async (req, res) => {
+    try {
+        const stats = await Article.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    trips: {$sum: 1},
+                    distance: {$sum: '$distance'},
+                    duration: {$sum: '$duration'}
+                }
+            },
+            {
+                $project: { // no visible - 0, visible - 1
+                    _id: 0
+                }
+            }
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                stats
+            }
+        })
+
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: err
+        })
+    }
+}

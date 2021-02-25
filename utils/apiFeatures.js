@@ -1,7 +1,7 @@
 class APIFeatures {
     constructor(articles, query) {
         this.articles = articles;
-        this.query = query;
+        this.query = query
     }
 
     pagination() {

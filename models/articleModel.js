@@ -30,11 +30,14 @@ const articleSchema = new mongoose.Schema({
         type: Date,
         required: [true, 'Artykuł musi posiadać datę wycieczki'],
     },
+    duration: {
+        type: Number
+    },
     distance: {
         type: Number
     }
 }, {
-    timestamps: { createdAt: 'createdAt'}
+    timestamps: {createdAt: 'createdAt'}
 });
 
 const Article = mongoose.model('Article', articleSchema);
