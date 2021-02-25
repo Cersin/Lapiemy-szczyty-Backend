@@ -1,5 +1,6 @@
 const Article = require('./../models/articleModel');
 const APIFeatures = require('./../utils/apiFeatures');
+const AppError = require('./../utils/appError');
 
 exports.getAllArticles = async (req, res) => {
     try {
@@ -23,9 +24,12 @@ exports.getAllArticles = async (req, res) => {
     }
 }
 
-exports.getOneArticle = async (req, res) => {
+exports.getOneArticle = async (req, res, next) => {
     try {
         const article = await Article.findOne({title: req.params.title});
+        if (!article) {
+            return next(new AppError(`Nie ma artykułu o nazwie: ${req.params.title} przepraszam.`));
+        }
         res.status(200).json({
             status: 'success',
             data: {
@@ -59,12 +63,17 @@ exports.createArticle = async (req, res) => {
 
 }
 
-exports.updateArticle = async (req, res) => {
+exports.updateArticle = async (req, res, next) => {
     try {
         const article = await Article.findOneAndUpdate({title: req.params.title}, req.body, {
             new: true,
             runValidators: true
         });
+
+        if (!article) {
+            return next(new AppError(`Nie ma artykułu o nazwie: ${req.params.title} przepraszam.`));
+        }
+
         res.status(200).json({
             status: 'success',
             data: {
@@ -79,9 +88,12 @@ exports.updateArticle = async (req, res) => {
     }
 }
 
-exports.deleteArticle = async (req, res) => {
+exports.deleteArticle = async (req, res, next) => {
     try {
-        await Article.findOneAndRemove({title: req.params.title});
+        const article = await Article.findOneAndRemove({title: req.params.title});
+        if (!article) {
+            return next(new AppError(`Nie ma artykułu o nazwie: ${req.params.title} przepraszam.`));
+        }
         res.status(204).json({
             status: 'success',
             data: null
