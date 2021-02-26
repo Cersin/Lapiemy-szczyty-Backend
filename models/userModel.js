@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Nie wpisałeś hasła'],
-        validate: [validator.isStrongPassword, 'Twoje hasło powinno mieć: 8 liter, 1 z małej, 1 z dużej, 1 liczbę, 1 symbol']
+        validate: [validator.isStrongPassword, 'Twoje hasło powinno mieć: 8 liter, 1 z małej, 1 z dużej, 1 liczbę, 1 symbol'],
+        select: false
     },
     passwordConfirm: {
         type: String,
@@ -39,6 +40,10 @@ userSchema.pre('save', async function (next) {
 
     next();
 });
+
+userSchema.methods.correctPassword = async function(hashedPassword, userPassword) {
+    return await bcrypt.compare(hashedPassword, userPassword);
+}
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
