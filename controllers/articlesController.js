@@ -135,6 +135,6 @@ exports.getArticlesStats = async (req, res) => {
         res.status(400).json({
             status: 'failed',
             message: err
-        })
+        });
     }
 }
