@@ -16,7 +16,7 @@ router
 router
     .route('/:title')
     .get(articlesController.getOneArticle)
-    .patch(articlesController.updateArticle)
-    .delete(articlesController.deleteArticle);
+    .patch(authController.protect, articlesController.updateArticle)
+    .delete(authController.protect, articlesController.deleteArticle);
 
 module.exports = router;
