@@ -4,7 +4,7 @@ const articleSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Artykuł musi posiadać nazwę'],
-        unique: true,
+        unique: [true],
         trim: true
     },
     description: {

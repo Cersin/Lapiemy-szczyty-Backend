@@ -56,6 +56,32 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.protect = async (req, res, next) => {
+    try {
+        let token;
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            token = req.headers.authorization.split(' ')[1];
+        }
+        if (!token) {
+            throw new Error('Nie jesteś zalogowany. Zaloguj się!');
+        }
+
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        const currectUser = await User.findById(decoded.id);
+        if (!currectUser) {
+            throw new Error('Nie jesteś zalogowany. Zaloguj się!');
+        }
+
+        next();
+        // req.user = currectUser;
+    } catch (err) {
+        res.status(401).json({
+            status: 'failed',
+            message: err.message
+        });
+    }
+}
+
 exports.verify = async (req, res) => {
     try {
         const {token} = req.body;

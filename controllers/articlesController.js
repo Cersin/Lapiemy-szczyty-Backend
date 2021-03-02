@@ -19,7 +19,7 @@ exports.getAllArticles = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: 'failed',
-            message: err
+            message: err.message
         });
     }
 }
@@ -39,7 +39,7 @@ exports.getOneArticle = async (req, res, next) => {
     } catch (err) {
         res.status(404).json({
             status: 'failed',
-            message: err
+            message: err.message
         });
     }
 }
@@ -57,7 +57,7 @@ exports.createArticle = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             status: 'failed',
-            message: err
+            message: err.message
         })
     }
 
@@ -83,7 +83,7 @@ exports.updateArticle = async (req, res, next) => {
     } catch (err) {
         res.status(400).json({
             status: 'failed',
-            message: err
+            message: err.message
         })
     }
 }
@@ -101,7 +101,7 @@ exports.deleteArticle = async (req, res, next) => {
     } catch (err) {
         res.status(400).json({
             status: 'failed',
-            message: err
+            message: err.message
         })
     }
 }
@@ -134,7 +134,7 @@ exports.getArticlesStats = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             status: 'failed',
-            message: err
+            message: err.message
         });
     }
 }

@@ -1,5 +1,6 @@
 const express = require('express');
 const articlesController = require('../controllers/articlesController');
+const authController = require('../controllers/authController');
 const router = express.Router();
 
 // Get stats
@@ -9,7 +10,7 @@ router.route('/stats').get(articlesController.getArticlesStats);
 router
     .route('/')
     .get(articlesController.getAllArticles)
-    .post(articlesController.createArticle);
+    .post(authController.protect, articlesController.createArticle);
 
 // Get one, patch and delete article
 router
