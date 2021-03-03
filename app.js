@@ -5,6 +5,7 @@ const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const articleRouter = require('./routes/articlesRoutes');
 const adminRouter = require('./routes/adminRoutes');
+const emailRouter = require('./routes/emailRoutes');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json()); // middleware for sending request
 // use routes
 app.use('/articles', articleRouter);
 app.use('/admin', adminRouter);
+app.use('/email', emailRouter);
 
 // Wrong path handler
 app.all('*', (req, res, next) => {
