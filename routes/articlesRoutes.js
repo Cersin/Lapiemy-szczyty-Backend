@@ -10,13 +10,13 @@ router.route('/stats').get(articlesController.getArticlesStats);
 router
     .route('/')
     .get(articlesController.getAllArticles)
-    .post(authController.protect, articlesController.createArticle);
+    .post(authController.protect, authController.restrictRoles('admin'), articlesController.createArticle);
 
 // Get one, patch and delete article
 router
     .route('/:title')
     .get(articlesController.getOneArticle)
-    .patch(authController.protect, articlesController.updateArticle)
-    .delete(authController.protect, articlesController.deleteArticle);
+    .patch(authController.protect, authController.restrictRoles('admin'), articlesController.updateArticle)
+    .delete(authController.protect, authController.restrictRoles('admin'), articlesController.deleteArticle);
 
 module.exports = router;

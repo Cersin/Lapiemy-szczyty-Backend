@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.post('/verify', authController.verify);
+// router.post('/verify', authController.verify);
 
 // admin
 router

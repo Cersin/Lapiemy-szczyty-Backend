@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
         validate: [validator.isStrongPassword, 'Twoje hasło powinno mieć: 8 liter, 1 z małej, 1 z dużej, 1 liczbę, 1 symbol'],
         select: false
     },
+    role: {
+        type: String,
+        enum: ['user'],
+        default: 'user'
+    },
     passwordConfirm: {
         type: String,
         required: [true, 'Prosze potwierdź hasło'],

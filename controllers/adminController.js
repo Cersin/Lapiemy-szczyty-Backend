@@ -10,7 +10,6 @@ exports.createAdmin = async (req, res) => {
 exports.getAdmin = async (req, res) => {
     try {
         const users = await User.find();
-        console.log('lol');
         res.status(200).json({
             status: 'success',
             data: {

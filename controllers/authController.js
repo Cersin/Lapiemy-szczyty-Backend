@@ -6,7 +6,8 @@ exports.signup = async (req, res) => {
         const newUser = await User.create({
             name: req.body.name,
             password: req.body.password,
-            passwordConfirm: req.body.passwordConfirm
+            passwordConfirm: req.body.passwordConfirm,
+            role: req.body.role
         });
 
         const token = await jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
@@ -67,11 +68,11 @@ exports.protect = async (req, res, next) => {
         }
 
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-        const currectUser = await User.findById(decoded.id);
-        if (!currectUser) {
+        const currentUser = await User.findById(decoded.id);
+        if (!currentUser) {
             throw new Error('Nie jesteś zalogowany. Zaloguj się!');
         }
-
+        req.user = currentUser
         next();
         // req.user = currectUser;
     } catch (err) {
@@ -82,18 +83,34 @@ exports.protect = async (req, res, next) => {
     }
 }
 
-exports.verify = async (req, res) => {
-    try {
-        const {token} = req.body;
-        await jwt.verify(token, process.env.JWT_SECRET);
-        res.status(200).json({
-            status: 'success',
-            logged: true
-        })
-    } catch (err) {
-        res.status(401).json({
-            status: 'failed',
-            logged: false
-        });
+// exports.verify = async (req, res) => {
+//     try {
+//         const {token} = req.body;
+//         await jwt.verify(token, process.env.JWT_SECRET);
+//         res.status(200).json({
+//             status: 'success',
+//             logged: true
+//         })
+//     } catch (err) {
+//         res.status(401).json({
+//             status: 'failed',
+//             logged: false
+//         });
+//     }
+// }
+
+exports.restrictRoles = (...roles) => {
+    return (req, res, next) => {
+        try {
+            if (!roles.includes(req.user.role)) {
+                throw new Error('Nie masz uprawnień do wykonania tej akcji');
+            }
+            next();
+        } catch (e) {
+            res.status(403).json({
+                status: 'failed',
+                message: e.message
+            });
+        }
     }
 }
