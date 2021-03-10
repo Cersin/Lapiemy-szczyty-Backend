@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -11,7 +14,8 @@ const emailRouter = require('./routes/emailRoutes');
 
 const app = express();
 
-app.use(helmet());
+// Set security HTTP Headers
+app.use(helmet())
 
 if (process.env.NODE_ENV === 'development nodemon server') {
     app.use(morgan('dev'));
@@ -26,6 +30,15 @@ const limit = rateLimit({
 app.use('/', limit);
 
 app.use(express.json()); // middleware for sending request
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS - cross site scripting hack
+app.use(xss());
+
+// Prevent parameter pollution - duplicate query - sort etc
+app.use(hpp());
 
 // use routes
 app.use('/articles', articleRouter);
