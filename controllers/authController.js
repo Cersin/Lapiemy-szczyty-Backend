@@ -1,6 +1,14 @@
 const User = require('./../models/userModel');
 const jwt = require('jsonwebtoken');
 
+const createTokenCookie = (token, res) => {
+    res.cookie('jwt', token, {
+        expires: new Date(Date.now() + process.env.JWT_COOKIER_EXPIRES_IN * 24 * 60 * 60 * 1000),
+        secure: false, // true to https
+        httpOnly: true
+    });
+}
+
 exports.signup = async (req, res) => {
     try {
         const newUser = await User.create({
@@ -13,6 +21,10 @@ exports.signup = async (req, res) => {
         const token = await jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN
         });
+
+        newUser.password = undefined;
+
+        createTokenCookie(token, res);
 
         res.status(201).json({
             status: 'success',
@@ -43,6 +55,10 @@ exports.login = async (req, res) => {
         const token = await jwt.sign({id: user._id}, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN
         });
+
+        createTokenCookie(token, res);
+
+        user.password = undefined;
 
         res.status(200).json({
             status: 'success',
