@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -9,6 +10,8 @@ const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
 
 const app = express();
+
+app.use(helmet());
 
 if (process.env.NODE_ENV === 'development nodemon server') {
     app.use(morgan('dev'));
