@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -13,6 +14,12 @@ const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
 
 const app = express();
+
+const corsOptions = {
+    origin: "http://localhost:8080/"
+};
+
+app.use(cors());
 
 // Set security HTTP Headers
 app.use(helmet())
