@@ -99,21 +99,21 @@ exports.protect = async (req, res, next) => {
     }
 }
 
-// exports.verify = async (req, res) => {
-//     try {
-//         const {token} = req.body;
-//         await jwt.verify(token, process.env.JWT_SECRET);
-//         res.status(200).json({
-//             status: 'success',
-//             logged: true
-//         })
-//     } catch (err) {
-//         res.status(401).json({
-//             status: 'failed',
-//             logged: false
-//         });
-//     }
-// }
+exports.verify = async (req, res) => {
+    try {
+        const {token} = req.body;
+        await jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).json({
+            status: 'success',
+            logged: true
+        })
+    } catch (err) {
+        res.status(401).json({
+            status: 'failed',
+            logged: false
+        });
+    }
+}
 
 exports.restrictRoles = (...roles) => {
     return (req, res, next) => {
