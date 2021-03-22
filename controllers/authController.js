@@ -101,7 +101,13 @@ exports.protect = async (req, res, next) => {
 
 exports.verify = async (req, res) => {
     try {
-        const {token} = req.body;
+        let token;
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            token = req.headers.authorization.split(' ')[1];
+        }
+        if (!token) {
+            throw new Error('Nie jesteś zalogowany. Zaloguj się!');
+        }
         await jwt.verify(token, process.env.JWT_SECRET);
         res.status(200).json({
             status: 'success',
