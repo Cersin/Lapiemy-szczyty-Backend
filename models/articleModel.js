@@ -31,7 +31,7 @@ const articleSchema = new mongoose.Schema({
         required: [true, 'Artykuł musi posiadać datę wycieczki'],
     },
     duration: {
-        type: Number
+        type: String
     },
     distance: {
         type: Number
