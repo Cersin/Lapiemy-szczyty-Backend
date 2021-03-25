@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const articleRouter = require('./routes/articlesRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
+const imageRouter = require('./routes/imageRoutes');
 
 const app = express();
 
@@ -47,10 +48,14 @@ app.use(xss());
 // Prevent parameter pollution - duplicate query - sort etc
 app.use(hpp());
 
+// serve static files
+app.use(express.static(`${__dirname}/public`));
+
 // use routes
 app.use('/articles', articleRouter);
 app.use('/admin', adminRouter);
 app.use('/email', emailRouter);
+app.use('/image', imageRouter);
 
 // Wrong path handler
 app.all('*', (req, res, next) => {
