@@ -6,8 +6,9 @@ const multerStorage = multer.diskStorage({
         cb(null, 'public/img/articles');
     },
     filename: (req, file, cb) => {
-        const ext = file.mimetype.split('/')[1];
-        cb(null, `mountains-${Date.now()}.${ext}`);
+        // const ext = file.mimetype.split('/')[1];
+        // cb(null, `mountains-${Date.now()}.${ext}`);
+        cb(null, file.originalname);
     }
 });
 
@@ -27,10 +28,11 @@ const upload = multer({
 exports.uploadImage = upload.single('upload');
 
 exports.responseImage = async (req, res) => {
+    console.log(req.file);
     const imageUrl = req.file.path.replace(/\\/g, "/").substring("public".length);
     try {
         res.status(200).json({
-            url: `${req.hostname}:${process.env.PORT}/${imageUrl}`
+            url: `${req.hostname}:${process.env.PORT}${imageUrl}`
         });
     } catch (err) {
         res.status(404).json({
