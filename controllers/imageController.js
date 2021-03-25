@@ -30,7 +30,7 @@ exports.responseImage = async (req, res) => {
     const imageUrl = req.file.path.replace(/\\/g, "/").substring("public".length);
     try {
         res.status(200).json({
-            url: imageUrl
+            url: `${req.hostname}:${process.env.PORT}/${imageUrl}`
         });
     } catch (err) {
         res.status(404).json({
