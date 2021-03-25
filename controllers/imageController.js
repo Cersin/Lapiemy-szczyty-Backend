@@ -24,7 +24,7 @@ const upload = multer({
     fileFilter: multerFilter
 });
 
-exports.uploadImage = upload.single('image');
+exports.uploadImage = upload.single('upload');
 
 exports.responseImage = async (req, res) => {
     const imageUrl = req.file.path.replace(/\\/g, "/").substring("public".length);
