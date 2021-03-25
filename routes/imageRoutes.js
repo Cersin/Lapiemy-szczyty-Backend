@@ -3,7 +3,7 @@ const imageController = require('../controllers/imageController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
-router.patch('/send',
+router.post('/send',
     authController.protect,
     authController.restrictRoles('admin'),
     imageController.uploadImage,
