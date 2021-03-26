@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
+// const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 
@@ -42,8 +42,8 @@ app.use(express.json()); // middleware for sending request
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
-// Data sanitization against XSS - cross site scripting hack
-app.use(xss());
+// // Data sanitization against XSS - cross site scripting hack
+// app.use(xss());
 
 // Prevent parameter pollution - duplicate query - sort etc
 app.use(hpp());
