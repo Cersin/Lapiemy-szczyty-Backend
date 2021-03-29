@@ -35,6 +35,9 @@ const articleSchema = new mongoose.Schema({
     },
     distance: {
         type: Number
+    },
+    map: {
+        type: String
     }
 }, {
     timestamps: {createdAt: 'createdAt'}

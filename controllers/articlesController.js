@@ -4,7 +4,7 @@ const AppError = require('./../utils/appError');
 
 exports.getAllArticles = async (req, res) => {
     try {
-        const features = new APIFeatures(Article.find(), req.query)
+        const features = new APIFeatures(Article.find().sort({createdAt: -1}), req.query)
             .pagination()
             .category();
         const articles = await features.articles;
