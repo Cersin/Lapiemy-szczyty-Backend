@@ -13,6 +13,7 @@ const articleRouter = require('./routes/articlesRoutes');
 const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
 const imageRouter = require('./routes/imageRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use('/articles', articleRouter);
 app.use('/admin', adminRouter);
 app.use('/email', emailRouter);
 app.use('/image', imageRouter);
+app.use('/category', categoryRouter);
 
 // Wrong path handler
 app.all('*', (req, res, next) => {

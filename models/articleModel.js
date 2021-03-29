@@ -25,7 +25,6 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Artykuł musi posiadać kontent'],
     },
-    images: [String],
     tripDate: {
         type: Date,
         required: [true, 'Artykuł musi posiadać datę wycieczki'],
