@@ -16,6 +16,9 @@ router
 router
     .route('/:title')
     .get(articlesController.getOneArticle)
+
+router
+    .route('/:id')
     .patch(authController.protect, authController.restrictRoles('admin'), articlesController.updateArticle)
     .delete(authController.protect, authController.restrictRoles('admin'), articlesController.deleteArticle);
 

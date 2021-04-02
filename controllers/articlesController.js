@@ -65,13 +65,13 @@ exports.createArticle = async (req, res) => {
 
 exports.updateArticle = async (req, res, next) => {
     try {
-        const article = await Article.findOneAndUpdate({title: req.params.title}, req.body, {
+        const article = await Article.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         });
 
         if (!article) {
-            return next(new AppError(`Nie ma artykułu o nazwie: ${req.params.title} przepraszam.`));
+            return next(new AppError(`Nie ma artykułu o id: ${req.params.id} przepraszam.`));
         }
 
         res.status(200).json({
@@ -90,9 +90,10 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.deleteArticle = async (req, res, next) => {
     try {
-        const article = await Article.findOneAndRemove({title: req.params.title});
+        console.log(req.params.id);
+        const article = await Article.findByIdAndDelete(req.params.id);
         if (!article) {
-            return next(new AppError(`Nie ma artykułu o nazwie: ${req.params.title} przepraszam.`));
+            return next(new AppError(`Nie ma artykułu o id: ${req.params.id} przepraszam.`));
         }
         res.status(204).json({
             status: 'success',
