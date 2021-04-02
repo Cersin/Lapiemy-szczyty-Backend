@@ -17,6 +17,24 @@ class APIFeatures {
         }
         return this;
     }
+
+    distance() {
+        if (this.query.distance) {
+            this.articles = this.articles.where('distance').equals(this.query.distance);
+        }
+        return this;
+    }
+
+    country() {
+        if (this.query.country) {
+            if (this.query.country === 'Polska') {
+                this.articles = this.articles.where('country').equals(this.query.country);
+            } else {
+                this.articles = this.articles.where('country').nin("Polska");
+            }
+        }
+        return this;
+    }
 }
 
 module.exports = APIFeatures;

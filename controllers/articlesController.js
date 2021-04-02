@@ -4,9 +4,16 @@ const AppError = require('./../utils/appError');
 
 exports.getAllArticles = async (req, res) => {
     try {
-        const features = new APIFeatures(Article.find().sort({createdAt: -1}), req.query)
+        const queryObj = {...req.query};
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        queryStr = JSON.parse(queryStr);
+
+        const features = new APIFeatures(Article.find().sort({createdAt: -1}), queryStr)
             .pagination()
-            .category();
+            .category()
+            .distance()
+            .country()
         const articles = await features.articles;
 
         res.status(200).json({

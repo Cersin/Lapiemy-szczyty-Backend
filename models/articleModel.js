@@ -35,6 +35,11 @@ const articleSchema = new mongoose.Schema({
     distance: {
         type: Number
     },
+    country: {
+        type: String,
+        required: [true, 'Artykuł musi posiadać nazwę kraju'],
+        trim: true
+    },
     map: {
         type: String
     }
