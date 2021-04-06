@@ -15,18 +15,33 @@ exports.getAllArticles = async (req, res) => {
             .distance()
             .country()
         const articles = await features.articles;
-
         res.status(200).json({
             status: 'success',
             results: articles.length,
+            length: articles.lengthAll,
             data: {
-                articles
+                articles,
             }
         });
     } catch (err) {
         res.status(404).json({
             status: 'failed',
             message: err.message
+        });
+    }
+}
+
+exports.getNumberOfArticles = async (req, res) => {
+    try {
+        const count = await Article.countDocuments();
+        res.status(200).json({
+            status: 'success',
+            count: count
+        });
+    } catch (e) {
+        res.status(404).json({
+            status: 'failed',
+            message: e.message
         });
     }
 }

@@ -47,5 +47,7 @@ const articleSchema = new mongoose.Schema({
     timestamps: {createdAt: 'createdAt'}
 });
 
+
 const Article = mongoose.model('Article', articleSchema);
+
 module.exports = Article;
