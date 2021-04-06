@@ -4,7 +4,8 @@ const imageSchema = new mongoose.Schema({
     url: {
         type: String,
         required: [true, 'Zdjęcie musi posiadać ciąg do dostępu'],
-        trim: true
+        trim: true,
+        unique: true
     }
 });
 

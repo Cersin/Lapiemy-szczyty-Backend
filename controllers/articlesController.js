@@ -18,9 +18,8 @@ exports.getAllArticles = async (req, res) => {
         res.status(200).json({
             status: 'success',
             results: articles.length,
-            length: articles.lengthAll,
             data: {
-                articles,
+                articles
             }
         });
     } catch (err) {

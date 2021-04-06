@@ -3,6 +3,8 @@ const imageController = require('../controllers/imageController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 
+router.get('/', imageController.getImages);
+
 router.post('/send',
     authController.protect,
     authController.restrictRoles('admin'),
