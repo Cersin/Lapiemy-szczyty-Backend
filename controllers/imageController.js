@@ -1,3 +1,4 @@
+const Image = require('./../models/imageModel');
 const multer = require('multer');
 const AppError = require('./../utils/appError');
 
@@ -31,6 +32,9 @@ exports.responseImage = async (req, res) => {
     console.log(req.file);
     const imageUrl = req.file.path.replace(/\\/g, "/").substring("public".length);
     try {
+        const urlGallery = `${imageUrl}`;
+        await Image.create({ url: urlGallery })
+
         res.status(200).json({
             url: `http://${req.hostname}:${process.env.PORT}${imageUrl}`
         });
