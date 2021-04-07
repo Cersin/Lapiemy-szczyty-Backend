@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 // const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const history = require('connect-history-api-fallback');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -22,6 +23,9 @@ const corsOptions = {
 };
 
 app.use(cors());
+
+// history mode to work
+app.use(history());
 
 // Set security HTTP Headers
 app.use(helmet())
@@ -51,6 +55,9 @@ app.use(hpp());
 
 // serve static files
 app.use(express.static(`${__dirname}/public`));
+
+const path = __dirname + '/views';
+app.use(express.static(path));
 
 // use routes
 app.use('/articles', articleRouter);
