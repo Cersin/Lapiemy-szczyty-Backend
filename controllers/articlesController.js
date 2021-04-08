@@ -111,7 +111,7 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.deleteArticle = async (req, res, next) => {
     try {
-        console.log(req.params.id);
+        // console.log(req.params.id);
         const article = await Article.findByIdAndDelete(req.params.id);
         if (!article) {
             return next(new AppError(`Nie ma artykułu o id: ${req.params.id} przepraszam.`));

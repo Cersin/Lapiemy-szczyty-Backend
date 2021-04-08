@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
+const compression = require('compression');
 
 const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -28,7 +29,10 @@ app.use(cors());
 app.use(history());
 
 // Set security HTTP Headers
-app.use(helmet())
+app.use(helmet());
+
+// enable JSON compression fetch
+app.use(compression());
 
 if (process.env.NODE_ENV === 'development nodemon server') {
     app.use(morgan('dev'));

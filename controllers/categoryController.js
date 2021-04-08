@@ -4,7 +4,6 @@ exports.getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find();
         if (!categories) {
-            console.log('lol')
             throw new Error('Nie ma żadnej kategorii');
         }
 
