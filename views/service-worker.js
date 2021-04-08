@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.568b52572b06fd267820340058bdedcc.js"
+  "/precache-manifest.02573fb134e65eb33cfd3b7326e06dde.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "lapiemy-szczyty"});
