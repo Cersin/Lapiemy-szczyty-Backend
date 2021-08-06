@@ -13,13 +13,23 @@
     "url": "git+https://github.com/Cersin/Lapiemy-szczyty-Backend.git"
   },
   "keywords": [
+    "góry",
+    "beskid",
+    "śląski",
+    "tatry",
+    "zakopane",
+    "trasy",
     "mountains",
     "blog",
-    "lapiemy",
-    "szczyty",
-    "dog"
+    "łapiemy szczyty",
+    "pies",
+    "najlepsze trasy w góry"
   ],
-  "author": "Szymon Wójcik",
+  "author": {
+    "name": "Szymon Wójcik",
+    "email": "wojcik.szymon1@gmail.com",
+    "url": "https://lapiemyszczyty.pl"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Cersin/Lapiemy-szczyty-Backend/issues",
